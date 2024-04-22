@@ -18,6 +18,7 @@ class PermissionActivity : BaseActivity() {
         binding = ActivityPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.swPermission.setOnCheckedChangeListener { _, b ->
             if (b) {
                 Common.requestStoragePermissionPhoto(

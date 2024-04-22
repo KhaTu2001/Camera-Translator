@@ -2,6 +2,7 @@ package com.example.myapplication.utils
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentUris
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -9,28 +10,26 @@ import android.content.pm.PackageManager
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.preference.PreferenceManager
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.provider.Settings
+import android.text.TextUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.R
 import java.io.IOException
 
 object Common {
     var times = true
+    val KEY_PATH = "Path"
     var REQUEST_CODE_PERMISION = 100
-    var PERMISSIONS_TIRAMISU = arrayOf( //            Manifest.permission.READ_MEDIA_IMAGES,
-        //            Manifest.permission.READ_MEDIA_VIDEO,
-        Manifest.permission.CAMERA,
-        Manifest.permission.RECORD_AUDIO
-    )
-    var PERMISSIONS = arrayOf( //            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    val ASSET = "file:///android_asset/"
+    var PERMISSIONS = arrayOf( //
         Manifest.permission.CAMERA
     )
-    var PERMISSIONSRECORD = arrayOf( //            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.RECORD_AUDIO
-    )
+
     var PERMISSIONSCAM = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA,
@@ -41,6 +40,7 @@ object Common {
         val shared = PreferenceManager.getDefaultSharedPreferences(context)
         return shared.getInt("position", 0)
     }
+
     @JvmStatic
     fun hasStoragePermission(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -85,48 +85,6 @@ object Common {
     }
 
 
-    fun setLocationPosition(context: Context?, position: Int) {
-        val shared = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = shared.edit()
-        editor.putInt("position", position)
-        editor.apply()
-    }
-
-    fun setFirstOpen(context: Context?, isFirstOpen: Boolean) {
-        val shared = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = shared.edit()
-        editor.putBoolean("FirstOpen", isFirstOpen)
-        editor.apply()
-    }
-
-    fun getFirstOpen(context: Context?): Boolean {
-        val shared = PreferenceManager.getDefaultSharedPreferences(context)
-        return shared.getBoolean("FirstOpen", true)
-    }
-
-    private fun checkPermission(activity: Activity, PERMISSIONS: Array<String>, request: Boolean) {
-        var pms: MutableList<String?>? = null
-        for (pm in PERMISSIONS) {
-            if (ActivityCompat.checkSelfPermission(
-                    activity,
-                    pm
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                if (pms == null) {
-                    pms = ArrayList()
-                }
-                pms.add(pm)
-            }
-        }
-        if (pms != null) {
-            if (request) {
-                activity.requestPermissions(pms.toTypedArray<String?>(), REQUEST_CODE_PERMISION)
-            }
-        } else {
-            isPermission = true
-        }
-    }
-
     private fun checkPermission(
         activity: Activity,
         PERMISSIONS: Array<String>,
@@ -155,37 +113,13 @@ object Common {
         }
     }
 
-    fun setupPermissions(activity: Activity, request: Boolean) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//            checkPermission(activity,PERMISSIONS_TIRAMISU, request);
-//        }else {
-        checkPermission(activity, PERMISSIONS, request)
-        //        }
-    }
 
     fun setupPermissions(activity: Activity, request: Boolean, requestCode: Int) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//            checkPermission(activity,PERMISSIONS_TIRAMISU, request);
-//        }else {
         checkPermission(activity, PERMISSIONS, request, requestCode)
-        //        }
+
     }
 
-    fun setupPermissionsRecord(activity: Activity, request: Boolean, requestCode: Int) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//            checkPermission(activity,PERMISSIONS_TIRAMISU, request);
-//        }else {
-        checkPermission(activity, PERMISSIONSRECORD, request, requestCode)
-        //        }
-    }
 
-    fun setupPermission(activity: Activity, request: Boolean) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//            checkPermission(activity,PERMISSIONS_TIRAMISU, request);
-//        }else {
-        checkPermission(activity, PERMISSIONSCAM, request)
-        //        }
-    }
 
     fun showPermissonsAlert(context: Activity) {
         val builder = AlertDialog.Builder(context)

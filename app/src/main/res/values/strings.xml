@@ -9,4 +9,7 @@
     <string name="per_mission_title_camera">"Camera Permission "</string>
     <string name="permission_go_to_setting">Go to setting</string>
     <string name="allow_permission_to_continue">Allow permission to continue</string>
+    <string name="choose_a_photo">Choose a photo</string>
+    <string name="there_s_no_file_here">There’s no file here...</string>
+
 </resources>
