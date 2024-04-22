@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.PermissionActivity">
+
+    <LinearLayout
+        android:id="@+id/rlTop"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+
+        <TextView
+            android:id="@+id/txt_per_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="@string/permission_title"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_below="@id/rlTop">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_per_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:text="@string/the_app_needs_to_use_the_following_permissions_to_provide_photo_and_video_capture"
+                android:textColor="#99FFFFFF" />
+
+            <FrameLayout
+                android:id="@+id/permissionCamera"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/permission_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/camera_permission"
+                    android:textColor="@color/white"
+                    android:textSize="19sp" />
+
+                <Switch
+                    android:id="@+id/swPermissionCamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="30dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:switchMinWidth="20dp"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/custom_thumb_switch"
+                    android:track="@drawable/custom_track_switch" />
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/permission"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/permission_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/media_files"
+                    android:textColor="@color/white"
+                    android:textSize="19sp" />
+
+                <Switch
+                    android:id="@+id/swPermission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="30dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:switchMinWidth="20dp"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/custom_thumb_switch"
+                    android:track="@drawable/custom_track_switch" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/btn_continue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_notallowpermission"
+                android:layout_marginHorizontal="20dp"
+                android:paddingVertical="12dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_continue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left"
+                    android:text="@string/permission_continue"
+                    android:textColor="#8C8C8C"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>
