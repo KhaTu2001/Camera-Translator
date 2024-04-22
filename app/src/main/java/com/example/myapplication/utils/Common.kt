@@ -32,8 +32,7 @@ object Common {
 
     var PERMISSIONSCAM = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA,
-        Manifest.permission.RECORD_AUDIO
+        Manifest.permission.CAMERA
     )
     var isPermission = false
     fun getLocationPosition(context: Context?): Int {
@@ -45,17 +44,11 @@ object Common {
     fun hasStoragePermission(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             hasPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) &&
-                    hasPermission(context, Manifest.permission.CAMERA) && hasPermission(
-                context,
-                Manifest.permission.RECORD_AUDIO
-            )
+                    hasPermission(context, Manifest.permission.CAMERA)
         } else {
             hasPermission(context, Manifest.permission.READ_MEDIA_VIDEO) &&
                     hasPermission(context, Manifest.permission.READ_MEDIA_IMAGES) &&
-                    hasPermission(context, Manifest.permission.CAMERA) && hasPermission(
-                context,
-                Manifest.permission.RECORD_AUDIO
-            )
+                    hasPermission(context, Manifest.permission.CAMERA)
         }
     }
 
