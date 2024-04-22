@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Chinese"
+                android:textColor="@color/black"
                 android:layout_marginStart="12dp"/>
             <View
                 android:layout_width="0dp"
@@ -78,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/black"
                 android:text="Vietnamese"
                 android:layout_marginEnd="12dp"/>
             <ImageView
@@ -118,8 +120,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/btn_take_image"/>
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="60dp"
         android:src="@drawable/ic_flash_off"
         app:layout_constraintTop_toTopOf="@+id/btn_take_image"

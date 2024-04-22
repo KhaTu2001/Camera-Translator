@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
 import com.example.myapplication.adapter.ImageAdapter
 import com.example.myapplication.databinding.ActivityGallaryBinding
@@ -22,6 +23,7 @@ class GallaryActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGallaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()

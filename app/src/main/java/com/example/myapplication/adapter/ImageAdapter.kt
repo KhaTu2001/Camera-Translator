@@ -98,10 +98,10 @@ class ImageAdapter(
         fun bind(path: String) {
             Glide.with(mContext)
                 .load(path)
-                .diskCacheStrategy(DiskCacheStrategy.NONE) // Không lưu vào cache để load từ asset
-                .skipMemoryCache(true) // Không lưu vào bộ nhớ cache để load từ asset
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .transform(CenterCrop(), RoundedCorners(52))
-                .into(binding.imgDraw);
+                .into(binding.imgDraw)
 
         }
     }

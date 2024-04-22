@@ -50,7 +50,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("com.github.yalantis:ucrop:2.2.8")
     implementation("com.airbnb.android:lottie:6.3.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     // The following line is optional, as the core library is included indirectly by camera-camera2

@@ -19,20 +19,26 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.utils.Common
 import com.example.myapplication.utils.FileHelper
+import com.example.myapplication.utils.MainViewModel
 import com.jakewharton.rxbinding4.view.clicks
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity() {
-    private lateinit var binding:ActivityMainBinding
-    lateinit var cameraController: LifecycleCameraController
-    var fileOutput = ""
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var cameraController: LifecycleCameraController
+    private var fileOutput = ""
     private var turnOnFlash = false
-    var cameraSelector = CameraSelector.LENS_FACING_BACK
+    private var cameraSelector = CameraSelector.LENS_FACING_BACK
+    private lateinit var viewModel: MainViewModel
     private var imageCapture: ImageCapture? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +46,29 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         turnOnFlash = false
         initCamera(cameraSelector)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
+        viewModel.loadPhoto(this)
+
+        viewModel.listPhoto.observe(this) {
+            Glide.with(this)
+                .load(it[0])
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(binding.imgRecent)
+        }
+
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         binding.btnTakeImage.clicks().throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe {
             takePhoto()
         }
-
+        binding.imgRecent.clicks().throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe {
+            startActivity(
+                Intent(this@MainActivity, GallaryActivity::class.java)
+            )
+        }
         binding.btnFlash.clicks().throttleFirst(200, TimeUnit.MILLISECONDS).subscribe {
             if (turnOnFlash) {
                 turnOnFlash = false
@@ -55,6 +79,7 @@ class MainActivity : BaseActivity() {
             }
         }
     }
+
     private fun takePhoto() {
         val name = SimpleDateFormat("yyyy_MM_dd_hh_mm", Locale.US)
             .format(System.currentTimeMillis())
@@ -83,11 +108,17 @@ class MainActivity : BaseActivity() {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     fileOutput = FileHelper.getRealPathFromURI(this@MainActivity, output.savedUri)
-                    startActivity(Intent(this@MainActivity,ScanningActivity::class.java).putExtra(Common.KEY_PATH,fileOutput))
+                    startActivity(
+                        Intent(this@MainActivity, ScanningActivity::class.java).putExtra(
+                            Common.KEY_PATH,
+                            fileOutput
+                        )
+                    )
                 }
             }
         )
     }
+
     private fun initCamera(cameraSelector: Int) {
         cameraController = LifecycleCameraController(this)
         cameraController.bindToLifecycle(this)
@@ -117,6 +148,7 @@ class MainActivity : BaseActivity() {
     @SuppressLint("RestrictedApi")
     private fun turnOnFlash() {
         try {
+            binding.btnFlash.setImageResource(R.drawable.ic_flash_on)
             imageCapture?.camera?.cameraControl?.enableTorch(true)
         } catch (e: CameraAccessException) {
             e.printStackTrace()
@@ -127,6 +159,7 @@ class MainActivity : BaseActivity() {
     private fun turnOffFlash() {
         try {
             imageCapture?.camera?.cameraControl?.enableTorch(false)
+            binding.btnFlash.setImageResource(R.drawable.ic_flash_off)
         } catch (e: CameraAccessException) {
             e.printStackTrace()
         }
