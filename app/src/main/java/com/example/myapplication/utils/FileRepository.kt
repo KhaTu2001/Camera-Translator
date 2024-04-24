@@ -7,17 +7,6 @@ import java.io.File
 
 
 object FileRepository {
-    fun getListImageDrawingByCategory(context: Context, categoryName: String): ArrayList<String>{
-        val list = ArrayList<String>()
-        val listfile = context.assets.list(categoryName)
-        if(listfile!=null){
-            for (nameFile : String in listfile.iterator()){
-                list.add(Common.ASSET+categoryName+File.separator+nameFile)
-                Log.e("AAAAAAAAAAAA", "getListImageDrawingByCategory: "+ Common.ASSET+categoryName+File.separator+nameFile)
-            }
-        }
-        return list;
-    }
     fun getAllImages(context: Context): ArrayList<String> {
         val imagePaths = ArrayList<String>()
         val projection = arrayOf(MediaStore.Images.Media.DATA)

@@ -12,5 +12,6 @@
     <string name="choose_a_photo">Choose a photo</string>
     <string name="there_s_no_file_here">There’s no file here...</string>
     <string name="scanning_image">Scanning Image</string>
+    <string name="relsult">Translation Result</string>
 
 </resources>

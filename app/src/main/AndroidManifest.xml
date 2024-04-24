@@ -27,13 +27,17 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ScanningActivity"
+            android:name=".ui.ResultsActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ui.ScanningActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.GallaryActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PermissionActivity"
             android:exported="false"
