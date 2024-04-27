@@ -40,6 +40,7 @@ class MainActivity : BaseActivity() {
     private var cameraSelector = CameraSelector.LENS_FACING_BACK
     private lateinit var viewModel: MainViewModel
     private var imageCapture: ImageCapture? = null
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,24 +52,35 @@ class MainActivity : BaseActivity() {
         viewModel.loadPhoto(this)
 
         viewModel.listPhoto.observe(this) {
-            Glide.with(this)
-                .load(it[0])
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(binding.imgRecent)
+            try {
+                if (it.isNotEmpty()){
+                    Glide.with(this)
+                        .load(it[0])
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(binding.imgRecent)
+                }
+            }
+            catch (e:Exception){
+
+            }
+
         }
 
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
         binding.btnTakeImage.clicks().throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe {
             takePhoto()
         }
+
         binding.imgRecent.clicks().throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe {
             startActivity(
                 Intent(this@MainActivity, GallaryActivity::class.java)
             )
         }
+
         binding.btnFlash.clicks().throttleFirst(200, TimeUnit.MILLISECONDS).subscribe {
             if (turnOnFlash) {
                 turnOnFlash = false

@@ -24,6 +24,7 @@ import java.io.IOException
 object Common {
     var times = true
     val KEY_PATH = "Path"
+    val RESULTS_STRING = "RESULTS_STRING"
     var REQUEST_CODE_PERMISION = 100
     val ASSET = "file:///android_asset/"
     var PERMISSIONS = arrayOf( //

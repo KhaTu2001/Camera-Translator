@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.myapplication"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 28
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -37,6 +37,7 @@ android {
     buildFeatures{
         viewBinding = true
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -46,6 +47,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +68,9 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.2.2")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("com.jakewharton.rxbinding4:rxbinding:4.0.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.7.2")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
 }
