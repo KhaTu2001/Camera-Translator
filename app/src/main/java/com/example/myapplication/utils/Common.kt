@@ -2,23 +2,22 @@ package com.example.myapplication.utils
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentUris
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
-import android.preference.PreferenceManager
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.provider.Settings
-import android.text.TextUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.R
+import com.example.myapplication.api.ApiService
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 object Common {
@@ -26,20 +25,27 @@ object Common {
     val KEY_PATH = "Path"
     val RESULTS_STRING = "RESULTS_STRING"
     var REQUEST_CODE_PERMISION = 100
-    val ASSET = "file:///android_asset/"
     var PERMISSIONS = arrayOf( //
         Manifest.permission.CAMERA
     )
-
+    fun fileToBitmap(filePath: String): Bitmap? {
+        return BitmapFactory.decodeFile(filePath)
+    }
     var PERMISSIONSCAM = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA
     )
-    var isPermission = false
-    fun getLocationPosition(context: Context?): Int {
-        val shared = PreferenceManager.getDefaultSharedPreferences(context)
-        return shared.getInt("position", 0)
+    object RetrofitClient {
+        private const val BASE_URL = "http://your_server_address/"
+        val instance: ApiService by lazy {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            retrofit.create(ApiService::class.java)
+        }
     }
+    var isPermission = false
 
     @JvmStatic
     fun hasStoragePermission(context: Context): Boolean {
