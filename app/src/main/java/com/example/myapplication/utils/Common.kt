@@ -28,6 +28,8 @@ object Common {
     var PERMISSIONS = arrayOf( //
         Manifest.permission.CAMERA
     )
+    var isPermission = false
+
     fun fileToBitmap(filePath: String): Bitmap? {
         return BitmapFactory.decodeFile(filePath)
     }
@@ -36,7 +38,7 @@ object Common {
         Manifest.permission.CAMERA
     )
     object RetrofitClient {
-        private const val BASE_URL = "http://your_server_address/"
+        private const val BASE_URL = "http:///"
         val instance: ApiService by lazy {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -45,7 +47,6 @@ object Common {
             retrofit.create(ApiService::class.java)
         }
     }
-    var isPermission = false
 
     @JvmStatic
     fun hasStoragePermission(context: Context): Boolean {

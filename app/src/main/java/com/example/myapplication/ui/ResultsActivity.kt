@@ -24,6 +24,7 @@ class ResultsActivity : BaseActivity() {
             finish()
         }
 
+
         try {
             val path = intent.getStringExtra(Common.KEY_PATH).toString()
             Glide.with(this)
