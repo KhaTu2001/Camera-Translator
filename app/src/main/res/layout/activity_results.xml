@@ -7,30 +7,31 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     tools:context=".ui.ResultsActivity">
+
     <LinearLayout
         android:id="@+id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_alignParentTop="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnBack"
-            android:src="@drawable/ic_back"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
-            android:layout_marginStart="16dp"/>
+            android:src="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/txt_per_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_gravity="center"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:text="@string/relsult"
@@ -39,39 +40,80 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
     <ImageView
+        android:id="@+id/img_preview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/image_1"
-        app:layout_constraintTop_toBottomOf="@+id/rlTop"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:scaleType="centerCrop"
-        android:id="@+id/img_preview"/>
+        android:src="@drawable/image_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlTop" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginHorizontal="20dp"
-        android:padding="16dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/bg_relust_box"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="40dp">
-        <TextView
+        android:maxHeight="200dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Translation results:"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:fontFamily="@font/roboto_medium"/>
-        <TextView
-            android:id="@+id/tv_relust"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tiếng việt là một ngôn ngữ tuyệt vời..."
-            android:layout_marginTop="8dp"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:fontFamily="@font/roboto_medium"/>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/seeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Xem ảnh chữ nôm"
+                    android:textColor="#007AF5"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Chữ Nôm:"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv_nomeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Kết quả dịch:"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_relust"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </ScrollView>
+
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

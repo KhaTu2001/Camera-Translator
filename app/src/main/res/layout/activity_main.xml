@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
-            android:text="@string/app_name"
+            android:text="Camera Dịch"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -55,12 +55,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/china"/>
+                android:src="@drawable/vietnam"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Chinese"
+                android:text="Hán Nôm"
                 android:textColor="@color/black"
                 android:layout_marginStart="12dp"/>
             <View
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/black"
-                android:text="Vietnamese"
+                android:text="Tiếng Việt"
                 android:layout_marginEnd="12dp"/>
             <ImageView
                 android:layout_width="wrap_content"

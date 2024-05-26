@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">Camera Translator</string>
-    <string name="permission_title">Permission</string>
+    <string name="app_name">Camera Dịch</string>
+    <string name="permission_title">Cấp Quyền</string>
     <string name="the_app_needs_to_use_the_following_permissions_to_provide_photo_and_video_capture">The app needs to use the following permissions to provide photo and video capture.</string>
-    <string name="media_files">Media files</string>
-    <string name="camera_permission">Camera permission</string>
-    <string name="permission_continue">Continue</string>
-    <string name="per_mission_message_camera">"You must grant camera permission to use the app"</string>
-    <string name="per_mission_title_camera">"Camera Permission "</string>
-    <string name="permission_go_to_setting">Go to setting</string>
-    <string name="allow_permission_to_continue">Allow permission to continue</string>
-    <string name="choose_a_photo">Choose a photo</string>
-    <string name="there_s_no_file_here">There’s no file here...</string>
-    <string name="scanning_image">Scanning Image</string>
-    <string name="relsult">Translation Result</string>
+    <string name="media_files">Quyền Truy cập ảnh</string>
+    <string name="camera_permission">Quyền truy cập Camera</string>
+    <string name="permission_continue">Tiếp Tục</string>
+    <string name="per_mission_message_camera">"Bạn phải cấp quyền cho máy ảnh để sử dụng ứng dụng"</string>
+    <string name="per_mission_title_camera">"Quyền truy cập Camera "</string>
+    <string name="permission_go_to_setting">Đi Đến Cài Đặt</string>
+    <string name="allow_permission_to_continue">Cho phép quyền để tiếp tục</string>
+    <string name="choose_a_photo">Thư Viện Ảnh</string>
+    <string name="there_s_no_file_here">Không có ảnh nào ở đây</string>
+    <string name="scanning_image">Quét Ảnh</string>
+    <string name="relsult">Kết Quả Dịch</string>
 
 </resources>

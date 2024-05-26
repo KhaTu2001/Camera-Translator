@@ -28,6 +28,9 @@ class GallaryActivity : BaseActivity() {
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+        binding.btnReload.setOnClickListener {
+            initData()
+        }
 
         adapter = ImageAdapter(true, 0, 3)
         binding.rcvListPhoto.adapter = adapter
@@ -37,6 +40,7 @@ class GallaryActivity : BaseActivity() {
                 nextActivity(path)
             }
         })
+
     }
     private fun initData() {
         viewModel.loadPhoto(this)

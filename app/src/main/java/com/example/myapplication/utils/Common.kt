@@ -24,29 +24,13 @@ object Common {
     var times = true
     val KEY_PATH = "Path"
     val RESULTS_STRING = "RESULTS_STRING"
+    val NOM_STRING = "NOM_STRING"
+    val NOM_DETECTOR = "NOM_DETECTOR"
     var REQUEST_CODE_PERMISION = 100
     var PERMISSIONS = arrayOf( //
         Manifest.permission.CAMERA
     )
     var isPermission = false
-
-    fun fileToBitmap(filePath: String): Bitmap? {
-        return BitmapFactory.decodeFile(filePath)
-    }
-    var PERMISSIONSCAM = arrayOf(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA
-    )
-    object RetrofitClient {
-        private const val BASE_URL = "http:///"
-        val instance: ApiService by lazy {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            retrofit.create(ApiService::class.java)
-        }
-    }
 
     @JvmStatic
     fun hasStoragePermission(context: Context): Boolean {
