@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
+import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.R
+import com.example.myapplication.adapter.TranslateResultAdapter
 import com.example.myapplication.databinding.ActivityResultsBinding
 import com.example.myapplication.databinding.LayoutImageNomDetectorBinding
 import com.example.myapplication.utils.Common
@@ -16,21 +19,21 @@ import com.example.myapplication.utils.Common
 
 class ResultsActivity : BaseActivity() {
     private lateinit var binding: ActivityResultsBinding
+    private lateinit var adapter: TranslateResultAdapter
+    private var isSeeAll = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressed()
         }
-        binding.seeImage.paintFlags = binding.seeImage.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
+        binding.seeAll.paintFlags = binding.seeAll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        isSeeAll = false
 
         try {
             val path = intent.getStringExtra(Common.KEY_PATH).toString()
-            val ImageDetector = intent.getStringExtra(Common.NOM_DETECTOR).toString()
-            val bitmap: Bitmap = decodeBase64ToBitmap(ImageDetector)
 
             Glide.with(this)
                 .load(path)
@@ -38,10 +41,17 @@ class ResultsActivity : BaseActivity() {
                 .skipMemoryCache(true)
                 .into(binding.imgPreview)
 
-            binding.tvNomeText.text = intent.getStringExtra(Common.NOM_STRING)
-            binding.tvRelust.text = intent.getStringExtra(Common.RESULTS_STRING)
-            binding.seeImage.setOnClickListener {
-                showCustomDialog(bitmap)
+            adapter = TranslateResultAdapter(
+                ScanningActivity.nomArrayList,
+                ScanningActivity.resultArrayList
+            )
+            binding.rcvResult.adapter = adapter
+            binding.rcvResultAll.adapter = adapter
+
+            Log.d("ádasdsadsadsad", "onCreate: ${ScanningActivity.nomArrayList}")
+            binding.seeAll.setOnClickListener {
+                isSeeAll = true
+                binding.layoutSeeAll.visibility = View.VISIBLE
             }
 
         } catch (e: Exception) {
@@ -50,17 +60,22 @@ class ResultsActivity : BaseActivity() {
 
     }
 
-    private fun showCustomDialog(path: Bitmap) {
+    override fun onBackPressed() {
+        if (isSeeAll) {
+            binding.layoutSeeAll.visibility = View.GONE
+            isSeeAll = false
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun showCustomDialog() {
         val builder = AlertDialog.Builder(this)
         val dialogView: LayoutImageNomDetectorBinding =
             LayoutImageNomDetectorBinding.inflate(layoutInflater)
         builder.setView(dialogView.root)
         val dialog = builder.create()
-        Glide.with(this)
-            .load(path)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .into(dialogView.imageNom)
+
         dialogView.imageNom.setOnClickListener {
             dialog.dismiss()
         }
@@ -68,8 +83,5 @@ class ResultsActivity : BaseActivity() {
         dialog.show()
     }
 
-    private fun decodeBase64ToBitmap(base64String: String): Bitmap {
-        val decodedString: ByteArray = Base64.decode(base64String, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-    }
+
 }

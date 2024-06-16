@@ -1,6 +1,8 @@
 package com.example.myapplication.ui
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,10 +33,20 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ScanningActivity : BaseActivity() {
     private lateinit var binding:ActivityScanningBinding
+
+    companion object{
+        var nomArrayList:ArrayList<String> = ArrayList()
+        var resultArrayList:ArrayList<String> = ArrayList()
+        var imageArrayList:ArrayList<Bitmap> = ArrayList()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanningBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        nomArrayList = ArrayList()
+        resultArrayList = ArrayList()
+        imageArrayList = ArrayList()
 
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -60,24 +72,25 @@ class ScanningActivity : BaseActivity() {
     @OptIn(ExperimentalEncodingApi::class)
     private fun uploadImageToServer(imagePath: String) {
         val imageFile = Base64.encode(File(imagePath).readBytes())
-        CoroutineScope(Dispatchers.IO).launch {
-                val cbuilder = OkHttpClient.Builder();
-                cbuilder.connectTimeout(200, TimeUnit.SECONDS);
-                cbuilder.readTimeout(200, TimeUnit.SECONDS);
-                cbuilder.writeTimeout(200, TimeUnit.SECONDS);
-                val client = cbuilder.build();
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                val cbuilder = OkHttpClient.Builder()
+                cbuilder.connectTimeout(200, TimeUnit.SECONDS)
+                cbuilder.readTimeout(200, TimeUnit.SECONDS)
+                cbuilder.writeTimeout(200, TimeUnit.SECONDS)
+                val client = cbuilder.build()
                 val mediaType = "application/json".toMediaType()
                 val body = "{\r\n    \"img_base64\": \"$imageFile\"\r\n}".toRequestBody(mediaType)
                 val request = Request.Builder()
-                    .url("https://4ca0-2402-800-61c7-644f-14ae-c5be-ee43-c37c.ngrok-free.app/inference")
+                    .url("https://74ad-2402-800-61c7-644f-10a5-1172-518c-5c59.ngrok-free.app/inference")
                     .post(body)
                     .addHeader("Content-Type", "application/json")
                     .build()
 
-            withContext(Dispatchers.Main){
-                binding.btnTranslator.visibility = View.GONE
-                binding.progressBar.visibility = View.VISIBLE
-            }
+                withContext(Dispatchers.Main){
+                    binding.btnTranslator.visibility = View.GONE
+                    binding.progressBar.visibility = View.VISIBLE
+                }
                 client.newCall(request).enqueue(object : Callback {
                     override fun onResponse(call: Call, response: Response) {
                         val responseBody = response.body?.string()
@@ -87,22 +100,22 @@ class ScanningActivity : BaseActivity() {
                             JsonObject::class.java
                         )
                         val translation = jsonObject.getAsJsonObject("translation")
-                        val translationItem = translation.getAsJsonObject("0")
 
-                        if (translationItem!=null){
-                            val modernText = translationItem["modern_text"].asString
-                            val nomText = translationItem["nom_text"].asString
-                            val patchImgBase64 = translationItem["patch_img_base64"].asString
+                        if (translation!=null){
+                            val translationList = mutableListOf<JsonObject>()
+                            for (entry in translation.entrySet()) {
+                                val translationItem = entry.value.asJsonObject
+                                translationList.add(translationItem)
+                                nomArrayList.add(translationItem.get("nom_text").asString)
+                                imageArrayList.add(decodeBase64ToBitmap(translationItem.get("patch_img_base64").asString))
+                                resultArrayList.add(translationItem.get("modern_text").asString)
+                            }
                             val intent = Intent(this@ScanningActivity,ResultsActivity::class.java)
                             intent.putExtra(Common.KEY_PATH,imagePath)
-                            intent.putExtra(Common.NOM_DETECTOR,patchImgBase64)
-                            intent.putExtra(Common.RESULTS_STRING,modernText)
-                            intent.putExtra(Common.NOM_STRING,nomText)
                             startActivity(intent)
                             finish()
                         }
                         else{
-                            Log.d("asdasdasdasd", "onResponse: $translationItem")
                             runOnUiThread {
                                 binding.btnTranslator.visibility = View.VISIBLE
                                 binding.progressBar.visibility = View.GONE
@@ -127,6 +140,16 @@ class ScanningActivity : BaseActivity() {
                     }
                 })
 
+            }
         }
+        catch (e:Exception){
+
+        }
+
+
+    }
+    private fun decodeBase64ToBitmap(base64String: String): Bitmap {
+        val decodedString: ByteArray = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
     }
 }
