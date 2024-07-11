@@ -38,7 +38,6 @@ object Common {
             hasPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                     hasPermission(context, Manifest.permission.CAMERA)
         } else {
-            hasPermission(context, Manifest.permission.READ_MEDIA_VIDEO) &&
                     hasPermission(context, Manifest.permission.READ_MEDIA_IMAGES) &&
                     hasPermission(context, Manifest.permission.CAMERA)
         }
@@ -61,7 +60,6 @@ object Common {
                 )
             } else {
                 arrayOf(
-                    Manifest.permission.READ_MEDIA_VIDEO,
                     Manifest.permission.READ_MEDIA_IMAGES
                 )
             },

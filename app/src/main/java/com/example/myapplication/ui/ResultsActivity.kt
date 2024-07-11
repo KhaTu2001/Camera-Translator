@@ -48,7 +48,6 @@ class ResultsActivity : BaseActivity() {
             binding.rcvResult.adapter = adapter
             binding.rcvResultAll.adapter = adapter
 
-            Log.d("ádasdsadsadsad", "onCreate: ${ScanningActivity.nomArrayList}")
             binding.seeAll.setOnClickListener {
                 isSeeAll = true
                 binding.layoutSeeAll.visibility = View.VISIBLE

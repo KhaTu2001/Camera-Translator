@@ -82,7 +82,7 @@ class ScanningActivity : BaseActivity() {
                 val mediaType = "application/json".toMediaType()
                 val body = "{\r\n    \"img_base64\": \"$imageFile\"\r\n}".toRequestBody(mediaType)
                 val request = Request.Builder()
-                    .url("https://74ad-2402-800-61c7-644f-10a5-1172-518c-5c59.ngrok-free.app/inference")
+                    .url("https://ebe7-2402-800-61c7-d13b-90a7-4fc7-16aa-472a.ngrok-free.app/inference")
                     .post(body)
                     .addHeader("Content-Type", "application/json")
                     .build()
@@ -143,7 +143,7 @@ class ScanningActivity : BaseActivity() {
             }
         }
         catch (e:Exception){
-
+            Toast.makeText(this,"Kiểm tra lại đường dẫn Server",Toast.LENGTH_SHORT).show()
         }
 
 

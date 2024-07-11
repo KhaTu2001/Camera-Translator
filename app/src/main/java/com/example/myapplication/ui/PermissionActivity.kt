@@ -35,7 +35,7 @@ class PermissionActivity : BaseActivity() {
         }
 
         binding.btnContinue.setOnClickListener {
-            if (binding.swPermission.isChecked && binding.swPermissionCamera.isChecked) {
+            if (Common.hasStoragePermission(this)) {
                 setResult(RESULT_OK)
                 if (intent.getBooleanExtra("From_camera", false)) {
                     finish()
@@ -74,6 +74,7 @@ class PermissionActivity : BaseActivity() {
             }
             setUpView()
         }
+
         if (requestCode == 1111) {
             for (rs in grantResults) {
                 if (rs != PackageManager.PERMISSION_GRANTED) {
@@ -113,10 +114,6 @@ class PermissionActivity : BaseActivity() {
             if (ActivityCompat.checkSelfPermission(
                     this,
                     "android.permission.READ_MEDIA_IMAGES"
-                ) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    this,
-                    "android.permission.READ_MEDIA_VIDEO"
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 setUpView()
@@ -130,6 +127,7 @@ class PermissionActivity : BaseActivity() {
                 setUpView()
             }
         }
+
         if (Common.hasStoragePermission(this)) {
             binding.btnContinue.setBackgroundResource(R.drawable.bg_allowpermission)
             binding.txtContinue.setTextColor(getColor(R.color.white))
